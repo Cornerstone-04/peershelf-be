@@ -1,0 +1,6 @@
+@AcademicResourceApp_HostAddress = http://localhost:5288
+
+GET {{AcademicResourceApp_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
