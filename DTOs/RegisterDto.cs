@@ -6,7 +6,10 @@ namespace AcademicResourceApp.DTOs
     {
 
         [Required]
-        public string FullName { get; set; }
+        public string FirstName { get; set; }
+
+        [Required] 
+        public string LastName { get; set;}
 
         [Required]
         [EmailAddress]
@@ -16,11 +19,15 @@ namespace AcademicResourceApp.DTOs
         public string MatricNumber { get; set; }
 
         [Required]
-        [MinLength(6)]
+        [MinLength(8)]
         public string Password { get; set; }
 
         [Compare("Password", ErrorMessage = "Password do not match")]
         public string PasswordConfirmation { get; set; }
+
+        // this based on the user having a student email or not.
+        [EmailAddress]
+        public string? SchoolEmail { get; set; }
 
     }
 }

@@ -8,7 +8,7 @@
         public string FileUrl { get; set; }  //Cloudinary URL
         public string Type { get; set; } // Pdf, Hardcopy
         public DateTime UploadedAt { get; set; } = DateTime.UtcNow;
-        public string UploadedById { get; set; }
+        public Guid UploadedById { get; set; }
         public User UploadedBy { get; set; }
     }
 }
