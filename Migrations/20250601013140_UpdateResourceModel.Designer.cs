@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AcademicResourceApp.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250530191704_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20250601013140_UpdateResourceModel")]
+    partial class UpdateResourceModel
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -93,7 +93,7 @@ namespace AcademicResourceApp.Migrations
                     b.Property<DateTime>("UploadedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("UploadedById")
+                    b.Property<Guid?>("UploadedById")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -168,8 +168,7 @@ namespace AcademicResourceApp.Migrations
                     b.HasOne("AcademicResourceApp.Models.User", "UploadedBy")
                         .WithMany("Resources")
                         .HasForeignKey("UploadedById")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("UploadedBy");
                 });

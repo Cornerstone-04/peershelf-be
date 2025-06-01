@@ -1,5 +1,6 @@
 using AcademicResourceApp.Data;
 using AcademicResourceApp.Helpers;
+using AcademicResourceApp.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -33,7 +34,15 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 // this is for cloudinary
 builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
+builder.Services.AddSingleton(x =>
+{
+    var settings = builder.Configuration.GetSection("CloudinarySettings").Get<CloudinarySettings>();
+    var account = new CloudinaryDotNet.Account(settings.CloudName, settings.ApiKey, settings.ApiSecret);
+    return new CloudinaryDotNet.Cloudinary(account);
+});
 
+builder.Services.AddScoped<AuthService>();
+builder.Services.AddScoped<Microsoft.AspNetCore.Identity.IPasswordHasher<AcademicResourceApp.Models.User>, Microsoft.AspNetCore.Identity.PasswordHasher<AcademicResourceApp.Models.User>>();
 
 var app = builder.Build();
 
@@ -52,7 +61,6 @@ using (var scope = app.Services.CreateScope())
         throw; // Optionally rethrow to stop app startup
     }
 }
-
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

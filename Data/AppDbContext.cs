@@ -46,7 +46,7 @@ namespace AcademicResourceApp.Data
                 .HasOne(r => r.UploadedBy)
                 .WithMany(u => u.Resources)
                 .HasForeignKey(r => r.UploadedById)
-                .OnDelete(DeleteBehavior.Cascade); // If you want, you can also restrict here
+                .OnDelete(DeleteBehavior.Cascade);
         }
 
     }

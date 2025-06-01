@@ -17,6 +17,7 @@ namespace AcademicResourceApp.Services
             _context = context;
             _passwordHasher = passwordHasher;
         }
+        public IPasswordHasher<User> PasswordHasher => _passwordHasher;
 
         public async Task<string> RegisterAsync(RegisterDto request)
         {

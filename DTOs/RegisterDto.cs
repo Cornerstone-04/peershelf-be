@@ -16,9 +16,6 @@ namespace AcademicResourceApp.DTOs
         public string Email { get; set; }
 
         [Required]
-        public string MatricNumber { get; set; }
-
-        [Required]
         [MinLength(8)]
         public string Password { get; set; }
 

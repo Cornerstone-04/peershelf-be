@@ -3,6 +3,7 @@ using AcademicResourceApp.DTOs;
 using AcademicResourceApp.Helpers;
 using AcademicResourceApp.Models;
 using AcademicResourceApp.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,15 +17,11 @@ namespace AcademicResourceApp.Controllers
         private readonly IConfiguration _config;
         private readonly AuthService _authService;
 
-        public AuthController(AuthService authService)
-        {
-            _authService = authService;
-        }
-
-        public AuthController(AppDbContext context, IConfiguration config)
+        public AuthController(AppDbContext context, IConfiguration config, AuthService authService)
         {
             _context = context;
             _config = config;
+            _authService = authService;
         }
 
         [HttpPost("register")]
@@ -48,12 +45,18 @@ namespace AcademicResourceApp.Controllers
         public async Task<IActionResult> Login(LoginDto dto)
         {
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == dto.Email);
-            if (user == null || !BCrypt.Net.BCrypt.Verify(dto.Password, user.PasswordHash))
+            if (user == null || string.IsNullOrEmpty(user.PasswordHash))
+                return Unauthorized("Invalid credentials.");
+
+            var result = _authService.PasswordHasher.VerifyHashedPassword(user, user.PasswordHash, dto.Password);
+            if (result == PasswordVerificationResult.Failed)
                 return Unauthorized("Invalid credentials.");
 
             var token = JwtHelper.GenerateToken(user, _config);
             return Ok(new { token });
         }
+
+
     }
 
 }
