@@ -22,7 +22,7 @@ namespace AcademicResourceApp.DTOs
         [Compare("Password", ErrorMessage = "Password do not match")]
         public string PasswordConfirmation { get; set; }
 
-        // this based on the user having a student email or not.
+        // this is based on the user having a student email or not.
         [EmailAddress]
         public string? SchoolEmail { get; set; }
 

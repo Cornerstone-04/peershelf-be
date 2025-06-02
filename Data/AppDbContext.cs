@@ -13,6 +13,7 @@ namespace AcademicResourceApp.Data
         public DbSet<User> Users { get; set; }
         public DbSet<Resource> Resources { get; set; }
         public DbSet<BorrowTransaction> BorrowTransactions { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

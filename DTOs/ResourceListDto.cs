@@ -1,6 +1,6 @@
-﻿namespace AcademicResourceApp.Models
+﻿namespace AcademicResourceApp.DTOs
 {
-    public class Resource
+    public class ResourceListDto
     {
         public int Id { get; set; }
         public string Title { get; set; }
@@ -13,13 +13,7 @@
         public string Description { get; set; }
         public string FileUrl { get; set; }
         public DateTime UploadedAt { get; set; }
-        public Guid? UploadedById { get; set; }
-        public User UploadedBy { get; set; }
-
-        // Hardcover-specific fields
-        public string? PhysicalLocation { get; set; }
-        public string? MeetupLocation { get; set; }
-        public string? ImageUrl { get; set; } // For uploaded image
+        public string? ImageUrl { get; set; }
     }
 
 

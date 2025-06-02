@@ -1,26 +1,29 @@
-﻿namespace AcademicResourceApp.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace AcademicResourceApp.DTOs
 {
-    public class Resource
+    public class UploadResourceDto
     {
-        public int Id { get; set; }
+        [Required]
         public string Title { get; set; }
+        [Required]
         public string CourseCode { get; set; }
+        [Required]
         public string Author { get; set; }
+        [Required]
         public string Format { get; set; }
+        [Required]
         public string Department { get; set; }
+        [Required]
         public string Level { get; set; }
         public string Type { get; set; }
         public string Description { get; set; }
-        public string FileUrl { get; set; }
-        public DateTime UploadedAt { get; set; }
-        public Guid? UploadedById { get; set; }
-        public User UploadedBy { get; set; }
+        [Required]
+        public IFormFile File { get; set; }
 
         // Hardcover-specific fields
         public string? PhysicalLocation { get; set; }
         public string? MeetupLocation { get; set; }
-        public string? ImageUrl { get; set; } // For uploaded image
+        public IFormFile? Image { get; set; } // For uploaded image
     }
-
-
 }
