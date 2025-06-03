@@ -13,7 +13,7 @@ namespace AcademicResourceApp.Models
         public string? SchoolEmail { get; set; }
 
         public List<Resource> Resources { get; set; }
-        public List<BorrowTransaction> BorrrowedResources { get; set; }
+        public List<BorrowTransaction> BorrowedResources { get; set; }
 
     }
 }

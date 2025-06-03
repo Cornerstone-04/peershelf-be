@@ -6,7 +6,7 @@ namespace AcademicResourceApp.Data
     public class AppDbContext : DbContext
     {
         public AppDbContext(DbContextOptions<AppDbContext> options)
-        : base(options)
+            : base(options)
         {
         }
 
@@ -28,28 +28,33 @@ namespace AcademicResourceApp.Data
             modelBuilder.Entity<User>()
                 .HasKey(u => u.Id);
 
-            // BorrowTransaction relationship with User (Borrower)
+            // User - Resource (Uploader)
+            modelBuilder.Entity<Resource>()
+                .HasOne(r => r.UploadedBy)
+                .WithMany(u => u.Resources)
+                .HasForeignKey(r => r.UploadedById)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // User - BorrowTransaction (Borrower)
             modelBuilder.Entity<BorrowTransaction>()
                 .HasOne(bt => bt.Borrower)
-                .WithMany()
+                .WithMany(u => u.BorrowedResources)
                 .HasForeignKey(bt => bt.BorrowerId)
-                .OnDelete(DeleteBehavior.Restrict); // <--- Restrict or NoAction
+                .OnDelete(DeleteBehavior.Restrict);
 
-            // BorrowTransaction relationship with Resource
+            // Resource - BorrowTransaction
             modelBuilder.Entity<BorrowTransaction>()
                 .HasOne(bt => bt.Resource)
                 .WithMany()
                 .HasForeignKey(bt => bt.ResourceId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            // Resource relationship with User (Uploader)
-            modelBuilder.Entity<Resource>()
-                .HasOne(r => r.UploadedBy)
-                .WithMany(u => u.Resources)
-                .HasForeignKey(r => r.UploadedById)
+            // Notification - User
+            modelBuilder.Entity<Notification>()
+                .HasOne(n => n.User)
+                .WithMany()
+                .HasForeignKey(n => n.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
         }
-
     }
-
 }

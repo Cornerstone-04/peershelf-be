@@ -301,6 +301,5 @@ namespace AcademicResourceApp.Controllers
 
             return Ok(requests);
         }
-
     }
 }
