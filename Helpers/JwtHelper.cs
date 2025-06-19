@@ -22,7 +22,7 @@ namespace AcademicResourceApp.Helpers
 
             var token = new JwtSecurityToken(
                 claims: claims,
-                expires: DateTime.Now.AddDays(7),
+                expires: DateTime.Now.AddHours(2),
                 signingCredentials: creds);
 
             return new JwtSecurityTokenHandler().WriteToken(token);
