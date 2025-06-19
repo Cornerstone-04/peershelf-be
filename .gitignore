@@ -361,3 +361,15 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Custom additions to ignore sensitive files
+
+# Don't track your production settings (important!)
+appsettings.Production.json
+
+# Don't track any environment variable files
+.env
+
+# Optional: if you're using .NET user-secrets
+**/secrets.json
+C:/Users/*/AppData/Roaming/Microsoft/UserSecrets/
