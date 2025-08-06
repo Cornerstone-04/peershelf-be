@@ -6,7 +6,7 @@ This is the backend API for the Academic Resource Sharing & Lending App, built w
 
 ## 🚀 Base URL
 
-> **Production:** `https://resourcesharingbackend.onrender.com`  
+> **Production:** `https://resourcesharingbackend.onrender.com`
 
 ### 📤 Upload Resource
 
@@ -17,36 +17,40 @@ Uploads a new academic resource. If the resource type is **Hardcover**, it may a
 
 #### 🔸 Request (multipart/form-data):
 
-| Field             | Type       | Required | Description                         |
-|------------------|------------|----------|-------------------------------------|
-| `Title`           | string     | ✅        | Resource title                      |
-| `CourseCode`      | string     | ✅        | E.g., CSC301                        |
-| `Author`          | string     | ✅        | Name of author                      |
-| `Format`          | string     | ✅        | PDF, DOCX, etc.                     |
-| `Department`      | string     | ✅        | E.g., Computer Science              |
-| `Level`           | string     | ✅        | 100 - 500 level                     |
-| `Type`            | string     | ❌        | "Softcopy" or "Hardcover"           |
-| `Description`     | string     | ❌        | Brief details                       |
-| `File`            | file       | ✅        | The main resource file              |
-| `Image`           | file       | ❌        | Only for hardcover type             |
-| `PhysicalLocation`| string     | ❌        | Where the hardcover is kept         |
-| `MeetupLocation`  | string     | ❌        | Where borrower can collect it       |
+| Field              | Type   | Required | Description                   |
+| ------------------ | ------ | -------- | ----------------------------- |
+| `Title`            | string | ✅       | Resource title                |
+| `CourseCode`       | string | ✅       | E.g., CSC301                  |
+| `Author`           | string | ✅       | Name of author                |
+| `Format`           | string | ✅       | PDF, DOCX, etc.               |
+| `Department`       | string | ✅       | E.g., Computer Science        |
+| `Level`            | string | ✅       | 100 - 500 level               |
+| `Type`             | string | ❌       | "Softcopy" or "Hardcover"     |
+| `Description`      | string | ❌       | Brief details                 |
+| `File`             | file   | ✅       | The main resource file        |
+| `Image`            | file   | ❌       | Only for hardcover type       |
+| `PhysicalLocation` | string | ❌       | Where the hardcover is kept   |
+| `MeetupLocation`   | string | ❌       | Where borrower can collect it |
 
 #### ✅ Response:
+
 ```json
 {
   "message": "Resource uploaded successfully!",
   "url": "https://res.cloudinary.com/.../resource.pdf"
 }
-📚 Get All Resources
+```
+
+#### 📚 Get All Resources
+
 GET /
 🔓 Public
 
 Fetches a list of all uploaded resources (softcopy and hardcover).
 
 ✅ Response:
-json
 
+```json
 [
   {
     "id": 1,
@@ -63,15 +67,18 @@ json
     "imageUrl": null
   }
 ]
-📘 Get Resource By ID
+```
+
+#### 📘 Get Resource By ID
+
 GET /{id}
 🔐 Requires Authentication
 
 Returns detailed information about a specific resource. For hardcover resources, physical and meetup locations are only shown to the uploader or approved borrower.
 
 ✅ Response:
-json
 
+```json
 {
   "id": 1,
   "title": "Intro to AI",
@@ -80,15 +87,18 @@ json
   "meetupLocation": "CSC Department",
   ...
 }
-🔔 Get Notifications
+```
+
+#### 🔔 Get Notifications
+
 GET /notifications
 🔐 Requires Authentication
 
 Fetches all notifications for the logged-in user.
 
 ✅ Response:
-json
 
+```json
 [
   {
     "id": 10,
@@ -97,42 +107,50 @@ json
     "createdAt": "2025-08-04T12:00:00Z"
   }
 ]
-📩 Request to Borrow Hardcover
+```
+
+#### 📩 Request to Borrow Hardcover
+
 POST /{resourceId}/borrow
 🔐 Requires Authentication
 
 Submits a borrow request for a hardcover resource.
 
 ✅ Response:
-json
 
+```json
 {
   "message": "Borrow request submitted."
 }
+```
+
 💡 Only one pending request is allowed per resource per user.
 
-✅ Approve Borrow Request
+#### ✅ Approve Borrow Request
+
 POST /borrow/{transactionId}/approve
 🔐 Uploader Only
 
 Approves a borrow request. Other pending requests will be automatically rejected.
 
 ✅ Response:
-json
 
+```json
 {
   "message": "Borrow request approved."
 }
+```
 
-📜 View Borrow Requests for a Resource
+#### 📜 View Borrow Requests for a Resource
+
 GET /{resourceId}/borrow-requests
 🔐 Uploader Only
 
 Retrieves all borrow requests made for a specific resource.
 
 ✅ Response:
-json
 
+```json
 [
   {
     "id": 15,
@@ -145,3 +163,4 @@ json
     "requestDate": "2025-08-02T10:00:00Z"
   }
 ]
+```
